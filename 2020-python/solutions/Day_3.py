@@ -12,18 +12,18 @@ from pathlib import Path
 base_path = Path(__file__).parent
 file_path = (base_path / '../inputs/Day_3.txt').resolve()
 
-aoc_day3_input = ''
+aoc_input = ''
 
 with open(file_path) as file:
-    aoc_day3_input = file.read()
+    aoc_input = file.read()
       
 #---------------------------------------------
 # Part 1
 #---------------------------------------------
-lines = (aoc_day3_input.count('\n'))+1
+lines = (aoc_input.count('\n'))+1
 
 new_map = ""
-for i in (aoc_day3_input.split('\n')):
+for i in (aoc_input.split('\n')):
     new_map += (i.strip()*lines) + '\n'
     
 #Removing last '\n'

@@ -13,11 +13,11 @@ import itertools
 base_path = Path(__file__).parent
 file_path = (base_path / '../inputs/Day_1.txt').resolve()
 
-aoc_day1_input = []
+aoc_input = []
 
 with open(file_path) as file:
     for line in file:
-        aoc_day1_input.append(int(line))
+        aoc_input.append(int(line))
 
 #---------------------------------------------
 # Part 1
@@ -25,7 +25,7 @@ with open(file_path) as file:
 entry1 = None
 entry2 = None
 answer = None
-for i in (list(itertools.combinations(aoc_day1_input, 2))):
+for i in (list(itertools.combinations(aoc_input, 2))):
     if (i[0]+i[1])==2020:
         entry1 = i[0]
         entry2 = i[1]
@@ -41,7 +41,7 @@ entry1 = None
 entry2 = None
 entry3 = None
 answer = None
-for i in (list(itertools.combinations(aoc_day1_input, 3))):
+for i in (list(itertools.combinations(aoc_input, 3))):
     if (i[0]+i[1]+i[2])==2020:
         entry1 = i[0]
         entry2 = i[1]
