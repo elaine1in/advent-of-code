@@ -13,18 +13,18 @@ from pathlib import Path
 base_path = Path(__file__).parent
 file_path = (base_path / '../inputs/Day_2.txt').resolve()
 
-aoc_day2_input = []
+aoc_input = []
 
 with open(file_path) as file:
     for line in file:
-        aoc_day2_input.append(line)
+        aoc_input.append(line)
 
 #---------------------------------------------
 # Part 1
 #---------------------------------------------
 count_valid = 0
 
-for i in aoc_day2_input:
+for i in aoc_input:
     rule, word = i.split(':')
     word = word.strip()
     number, letter = rule.split(' ')
@@ -42,7 +42,7 @@ print ('Part 1 Answer:', count_valid)
 #---------------------------------------------
 count_valid = 0
 
-for i in aoc_day2_input:
+for i in aoc_input:
     rule, word = i.split(':')
     word = word.strip()
     number, letter = rule.split(' ')

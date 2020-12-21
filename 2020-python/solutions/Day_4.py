@@ -13,12 +13,12 @@ from pathlib import Path
 base_path = Path(__file__).parent
 file_path = (base_path / '../inputs/Day_4.txt').resolve()
 
-aoc_day4_input = ''
+aoc_input = ''
 
 with open(file_path) as file:
-    aoc_day4_input = file.read()
+    aoc_input = file.read()
 
-aoc_day4_input = aoc_day4_input.split('\n')
+aoc_input = aoc_input.split('\n')
 
 attributes = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'] #'cid' is optional
 
@@ -28,7 +28,7 @@ attributes = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'] #'cid' is optiona
 count_attributes = 0
 count_valid = 0
 
-for i in aoc_day4_input:
+for i in aoc_input:
     if i == "":
         count_valid += 1 if count_attributes == len(attributes) else 0
         count_attributes = 0
@@ -48,7 +48,7 @@ print ('Part 1 Answer:', count_valid)
 count_attributes = 0
 count_valid = 0
 
-for i in aoc_day4_input:
+for i in aoc_input:
     if i == "":
         count_valid += 1 if count_attributes == len(attributes) else 0
         count_attributes = 0

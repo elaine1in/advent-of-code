@@ -12,11 +12,11 @@ from pathlib import Path
 base_path = Path(__file__).parent
 file_path = (base_path / '../inputs/Day_5.txt').resolve()
 
-aoc_day5_input = []
+aoc_input = []
 
 with open(file_path) as file:
     for line in file:
-        aoc_day5_input.append(line.strip())
+        aoc_input.append(line.strip())
         
 def binary_space_partitioning(first_row, last_row, index, iterations, bsp):
     if index == (iterations-1):
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     #---------------------------------------------
     seat_ids = []
     
-    for bsp in aoc_day5_input:
+    for bsp in aoc_input:
         row = binary_space_partitioning(0, 127, 0, 7, bsp)
         column = binary_space_partitioning(0, 7, 7, 10, bsp)
         seat_ids.append((row*8)+column)
