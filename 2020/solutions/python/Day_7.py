@@ -24,15 +24,15 @@ with open(file_path) as file:
 #---------------------------------------------
 # Test Scenario
 #---------------------------------------------        
-aoc_input = """light red bags contain 1 bright white bag, 2 muted yellow bags.
-dark orange bags contain 3 bright white bags, 4 muted yellow bags.
-bright white bags contain 1 shiny gold bag.
-muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.
-shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.
-dark olive bags contain 3 faded blue bags, 4 dotted black bags.
-vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
-faded blue bags contain no other bags.
-dotted black bags contain no other bags."""    
+#aoc_input = """light red bags contain 1 bright white bag, 2 muted yellow bags.
+#dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+#bright white bags contain 1 shiny gold bag.
+#muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.
+#shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.
+#dark olive bags contain 3 faded blue bags, 4 dotted black bags.
+#vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
+#faded blue bags contain no other bags.
+#dotted black bags contain no other bags."""    
 
 #aoc_input = """shiny gold bags contain 2 dark red bags.
 #dark red bags contain 2 dark orange bags.
@@ -41,7 +41,7 @@ dotted black bags contain no other bags."""
 #dark green bags contain 2 dark blue bags.
 #dark blue bags contain 2 dark violet bags.
 #dark violet bags contain no other bags."""    
-        
+
 aoc_input = aoc_input.split('\n')
 
 def search_dictionary_part_1(dictionary, bag):
@@ -66,70 +66,28 @@ def search_dictionary_part_1(dictionary, bag):
     return (bags_all)
     
 def search_dictionary_part_2(dictionary, bag):
+    bags_final = []
+    
     #starting point // get all other bags in bag
     bags = dictionary.get(bag)
     
-    print ('Starting Bags:', bags)
-    
-    bags_final = []
-    
     for i in bags:
-        
-        bags_all = []
-        bags_all.append(i)
-        
         bags_final.append(i)
         
-        i_split = i.split(' ')
-        i_number = int(i_split[0])
-        i_bag_name = ' '.join(i_split[1:])
+        i_bag_split = i.split(' ')
+        i_bag_number = int(i_bag_split[0])
+        i_bag_name = ' '.join(i_bag_split[1:])
+        other_bags = dictionary.get(i_bag_name)
         
-        while bags_all:
-            current_bag = bags_all[0]
-            current_bag_split = current_bag.split(' ')
-            current_number = int(current_bag_split[0])
-            current_bag_name = ' '.join(current_bag_split[1:])
-            other_bags = dictionary.get(current_bag_name)
+        for j in other_bags:
+            j_bag_split = j.split(' ')
+            j_bag_number = int(j_bag_split[0])
+            j_bag_name = ' '.join(j_bag_split[1:])
             
-            print ('Other Bags:', other_bags, '\n')
+            final_number = i_bag_number*j_bag_number
             
-            previous_bag = bags_final[-1]
-            previous_bag_split = previous_bag.split(' ')
-            previous_number = int(previous_bag_split[0])
-            previous_bag_name = ' '.join(previous_bag_split[1:])
-            
-            print ('Previous Bag:', previous_bag_name)
-  
-            print ('Current Bag:', current_bag_name)
-            if i_bag_name != current_bag_name:
-                #for k,v in dictionary.items():
-                #    for vv in v:
-                #        #extract only the current_bag_name
-                #        print ('vv bag name', ' '.join(vv.split(' ')[1:]))
-                #find all bags that have bag in its value
-                contained_in = [k for k,v in dictionary.items() for vv in v if current_bag_name in ' '.join(vv.split(' ')[1:])]
-                print ('contained in', contained_in)
-                contained_in_A = ' '.join(([y for x in bags_final for y in contained_in if ' '.join(x.split(' ')[1:])==y and ((y==i_bag_name and other_bags==[]) or (y==previous_bag_name))]))
-                print ('AA', contained_in_A, 'AA')
-                contained_in_number_list = [x.split(' ')[0] for x in bags_final if contained_in_A in ' '.join(x.split(' ')[1:])]
-                print ('cinl', contained_in_number_list)
-                contained_in_number = int(contained_in_number_list[0])
-                print ('contained in number', contained_in_number)
-                
-                final_number = (current_number*contained_in_number)
-                print ('final_number', final_number)
-                
-                bags_final.append(str(final_number) + ' ' + current_bag_name)
-            
-            #get all other allowed bags for the current_bag and add it to the bags list
-            bags_all.extend(other_bags)
-            
-            #remove current_bag as we have checked the dictionary for that entry now
-            bags_all.remove(current_bag)
-            
-            print ('Intermediate Bags Final:', bags_final)
-    
-    print ('Bags Final', bags_final)
+            bags.append(str(final_number) + ' ' + j_bag_name)
+          
     return (bags_final)
 
 if __name__ == '__main__':
