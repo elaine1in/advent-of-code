@@ -11,7 +11,7 @@ import re
 from pathlib import Path
 
 base_path = Path(__file__).parent.parent
-file_path = (base_path / '../inputs/Day_4.txt').resolve()
+file_path = (base_path / '../inputs/Day_04.txt').resolve()
 
 aoc_input = ''
 
