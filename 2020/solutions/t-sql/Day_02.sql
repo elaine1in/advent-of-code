@@ -14,7 +14,7 @@ CREATE TABLE #Day_2_Stg
 	)
 
 BULK INSERT #Day_2_Stg
-FROM '.....\advent-of-code\2020\inputs\Day_2.txt'
+FROM '.....\advent-of-code\2020\inputs\Day_02.txt'
 WITH
 	(
     FIRSTROW = 1,

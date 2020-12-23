@@ -13,7 +13,7 @@ CREATE TABLE #Day_1
 	)
 
 BULK INSERT #Day_1
-FROM '.....\advent-of-code\2020\inputs\Day_1.txt'
+FROM '.....\advent-of-code\2020\inputs\Day_01.txt'
 WITH
 	(
     FIRSTROW = 1,

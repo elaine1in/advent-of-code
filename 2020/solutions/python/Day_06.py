@@ -10,7 +10,7 @@
 from pathlib import Path
 
 base_path = Path(__file__).parent.parent
-file_path = (base_path / '../inputs/Day_6.txt').resolve()
+file_path = (base_path / '../inputs/Day_06.txt').resolve()
 
 aoc_input = []
 
