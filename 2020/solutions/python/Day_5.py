@@ -34,7 +34,7 @@ if __name__ == '__main__':
     #print ('Row: {0}, Column: {1}, Seat ID: {2}'.format(row, column, (row*8)+column))
     
     #---------------------------------------------
-    #Part 1
+    # Part 1
     #---------------------------------------------
     seat_ids = []
     
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     print ('Part 1 Answer:', max_seat_id)
     
     #---------------------------------------------
-    #Part 2
+    # Part 2
     #---------------------------------------------
     missing_seat_id = None
     
