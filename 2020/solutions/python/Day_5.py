@@ -3,7 +3,6 @@
 # Created Date: 2020-12-20
 # References Used: 
 #   https://www.python-course.eu/recursive_functions.php
-#   https://github.com/mariothedog/Advent-of-Code-2020/blob/main/Day%205/day_5.py
 #---------------------------------------------
 
 import math
@@ -48,14 +47,14 @@ if __name__ == '__main__':
     print ('Part 1 Answer:', max_seat_id)
     
     #---------------------------------------------
-    #Part 2 --? I didn't understand the question in Part 2
+    #Part 2
     #---------------------------------------------
-    min_seat_id = min(seat_ids)
     missing_seat_id = None
     
-    for i in range(min_seat_id, max_seat_id+1):
-        if i != sorted(seat_ids)[i-min_seat_id]:
-            missing_seat_id = i
+    seat_ids = sorted(seat_ids)
+    for i in range(1, len(seat_ids)):
+        if seat_ids[i]-seat_ids[i-1] != 1:
+            missing_seat_id = int((seat_ids[i]+seat_ids[i-1])/2)
             break
             
     print ('Part 2 Answer:', missing_seat_id)
