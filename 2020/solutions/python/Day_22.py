@@ -60,10 +60,7 @@ while player_1 and player_2:
 
 winner = player_1 if player_1 else player_2
 length = len(winner)
-answer = 0
-
-for i in range(length):
-    answer += (winner[i]*(length-i))
+answer = sum([(winner[i]*(length-i)) for i in range(length)])
 
 print ('Part 1 Answer:', answer)
 
