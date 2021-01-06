@@ -24,3 +24,13 @@ print ('Part 1 Answer:', answer)
 #---------------------------------------------
 # Part 2
 #---------------------------------------------
+floor = 0
+position = None
+for i in range(len(aoc_input)):
+    value = 1 if aoc_input[i]=='(' else -1
+    floor += value
+    if floor == -1:
+        position = i+1
+        break
+        
+print ('Part 2 Answer:', position)
