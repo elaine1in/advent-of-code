@@ -75,5 +75,5 @@ SELECT
 FROM
 	Sides AS s1
 	JOIN Sides AS s2 ON s2.ID=s1.ID AND s1.rn=1 AND s2.rn=2
-	LEFT JOIN Sides AS s3 ON s3.ID=s2.ID AND s2.rn=2 AND s3.rn=3
+	JOIN Sides AS s3 ON s3.ID=s2.ID AND s2.rn=2 AND s3.rn=3
 WHERE 1=1
