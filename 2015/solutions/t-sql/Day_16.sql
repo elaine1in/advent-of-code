@@ -64,87 +64,74 @@ INSERT INTO #MFCSAM
 SELECT * FROM #MFCSAM AS m
 
 ---------------------------------------------
--- Part 1
+-- Part 1, Part 2
 ---------------------------------------------
 SELECT
-	p.Aunt AS Answer
+	CASE
+		WHEN f.Answer_1=1 THEN 'Answer_1'
+		WHEN f.Answer_2=1 THEN 'Answer_2'
+	END AS Answer
+	,IIF((f.Answer_1=1 OR f.Answer_2=1), f.Aunt, NULL) AS Aunt
 FROM
 	(
 	SELECT
-		a.Aunt
-		,LEFT(TRIM(ss.[value]), CHARINDEX(':', TRIM(ss.[value]))-1) AS Compound
-		,SUBSTRING(TRIM(ss.[value]), CHARINDEX(':', TRIM(ss.[value]))+2, LEN(TRIM(ss.[value]))-CHARINDEX(':', TRIM(ss.[value]))+2) AS [value]
+		p.Aunt
+		,IIF(EXISTS(
+					SELECT
+						1
+					FROM
+						#MFCSAM AS m
+					WHERE 1=1
+						AND (m.children=p.children OR p.children IS NULL)
+						AND (m.cats=p.cats OR p.cats IS NULL)
+						AND (m.samoyeds=p.samoyeds OR p.samoyeds IS NULL)
+						AND (m.pomeranians=p.pomeranians OR p.pomeranians IS NULL)
+						AND (m.akitas=p.akitas OR p.akitas IS NULL)
+						AND (m.vizslas=p.vizslas OR p.vizslas IS NULL)
+						AND (m.goldfish=p.goldfish OR p.goldfish IS NULL)
+						AND (m.trees=p.trees OR p.trees IS NULL)
+						AND (m.cars=p.cars OR p.cars IS NULL)
+						AND (m.perfumes=p.perfumes OR p.perfumes IS NULL)
+					), 1, 0) AS Answer_1
+		,IIF(EXISTS(
+					SELECT
+						1
+					FROM
+						#MFCSAM AS m
+					WHERE 1=1
+						AND (m.children=p.children OR p.children IS NULL)
+						AND (m.cats<p.cats OR p.cats IS NULL)
+						AND (m.samoyeds=p.samoyeds OR p.samoyeds IS NULL)
+						AND (m.pomeranians>p.pomeranians OR p.pomeranians IS NULL)
+						AND (m.akitas=p.akitas OR p.akitas IS NULL)
+						AND (m.vizslas=p.vizslas OR p.vizslas IS NULL)
+						AND (m.goldfish>p.goldfish OR p.goldfish IS NULL)
+						AND (m.trees<p.trees OR p.trees IS NULL)
+						AND (m.cars=p.cars OR p.cars IS NULL)
+						AND (m.perfumes=p.perfumes OR p.perfumes IS NULL)
+					), 1, 0) AS Answer_2
 	FROM
 		(
 		SELECT
-			LEFT(d16.String, CHARINDEX(':', d16.String)-1) AS Aunt
-			,SUBSTRING(d16.String, CHARINDEX(':', d16.String)+2, LEN(d16.String)-CHARINDEX(':', d16.String)+2) AS Compounds
+			a.Aunt
+			,LEFT(TRIM(ss.[value]), CHARINDEX(':', TRIM(ss.[value]))-1) AS Compound
+			,SUBSTRING(TRIM(ss.[value]), CHARINDEX(':', TRIM(ss.[value]))+2, LEN(TRIM(ss.[value]))-CHARINDEX(':', TRIM(ss.[value]))+2) AS [value]
 		FROM
-			#Day_16 AS d16
+			(
+			SELECT
+				LEFT(d16.String, CHARINDEX(':', d16.String)-1) AS Aunt
+				,SUBSTRING(d16.String, CHARINDEX(':', d16.String)+2, LEN(d16.String)-CHARINDEX(':', d16.String)+2) AS Compounds
+			FROM
+				#Day_16 AS d16
+			WHERE 1=1
+			) AS a
+			CROSS APPLY STRING_SPLIT(a.Compounds, ',') AS ss
 		WHERE 1=1
-		) AS a
-		CROSS APPLY STRING_SPLIT(a.Compounds, ',') AS ss
+		) AS s
+		PIVOT(MAX([value]) FOR Compound IN ([children], [cats], [samoyeds], [pomeranians], [akitas], [vizslas], [goldfish], [trees], [cars], [perfumes])) AS p
 	WHERE 1=1
-	) AS s
-	PIVOT(MAX([value]) FOR Compound IN ([children], [cats], [samoyeds], [pomeranians], [akitas], [vizslas], [goldfish], [trees], [cars], [perfumes])) AS p
+	) AS f
 WHERE 1=1
-	AND EXISTS(
-				SELECT
-					1
-				FROM
-					#MFCSAM AS m
-				WHERE 1=1
-					AND (m.children=p.children OR p.children IS NULL)
-					AND (m.cats=p.cats OR p.cats IS NULL)
-					AND (m.samoyeds=p.samoyeds OR p.samoyeds IS NULL)
-					AND (m.pomeranians=p.pomeranians OR p.pomeranians IS NULL)
-					AND (m.akitas=p.akitas OR p.akitas IS NULL)
-					AND (m.vizslas=p.vizslas OR p.vizslas IS NULL)
-					AND (m.goldfish=p.goldfish OR p.goldfish IS NULL)
-					AND (m.trees=p.trees OR p.trees IS NULL)
-					AND (m.cars=p.cars OR p.cars IS NULL)
-					AND (m.perfumes=p.perfumes OR p.perfumes IS NULL)
-				)
-
----------------------------------------------
--- Part 2
----------------------------------------------
-SELECT
-	p.Aunt AS Answer
-FROM
-	(
-	SELECT
-		a.Aunt
-		,LEFT(TRIM(ss.[value]), CHARINDEX(':', TRIM(ss.[value]))-1) AS Compound
-		,SUBSTRING(TRIM(ss.[value]), CHARINDEX(':', TRIM(ss.[value]))+2, LEN(TRIM(ss.[value]))-CHARINDEX(':', TRIM(ss.[value]))+2) AS [value]
-	FROM
-		(
-		SELECT
-			LEFT(d16.String, CHARINDEX(':', d16.String)-1) AS Aunt
-			,SUBSTRING(d16.String, CHARINDEX(':', d16.String)+2, LEN(d16.String)-CHARINDEX(':', d16.String)+2) AS Compounds
-		FROM
-			#Day_16 AS d16
-		WHERE 1=1
-		) AS a
-		CROSS APPLY STRING_SPLIT(a.Compounds, ',') AS ss
-	WHERE 1=1
-	) AS s
-	PIVOT(MAX([value]) FOR Compound IN ([children], [cats], [samoyeds], [pomeranians], [akitas], [vizslas], [goldfish], [trees], [cars], [perfumes])) AS p
-WHERE 1=1
-	AND EXISTS(
-				SELECT
-					1
-				FROM
-					#MFCSAM AS m
-				WHERE 1=1
-					AND (m.children=p.children OR p.children IS NULL)
-					AND (m.cats<p.cats OR p.cats IS NULL)
-					AND (m.samoyeds=p.samoyeds OR p.samoyeds IS NULL)
-					AND (m.pomeranians>p.pomeranians OR p.pomeranians IS NULL)
-					AND (m.akitas=p.akitas OR p.akitas IS NULL)
-					AND (m.vizslas=p.vizslas OR p.vizslas IS NULL)
-					AND (m.goldfish>p.goldfish OR p.goldfish IS NULL)
-					AND (m.trees<p.trees OR p.trees IS NULL)
-					AND (m.cars=p.cars OR p.cars IS NULL)
-					AND (m.perfumes=p.perfumes OR p.perfumes IS NULL)
-				)
+	AND (f.Answer_1=1 OR f.Answer_2=1)
+ORDER BY
+	Answer

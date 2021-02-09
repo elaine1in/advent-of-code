@@ -38,26 +38,24 @@ MFCSAM = {
             ,'perfumes': 1
             }
 
-#---------------------------------------------
-# Part 1
-#---------------------------------------------
-answer = None
-for k, v in aoc_input.items():
-    if all([cv==MFCSAM[ck] for ck, cv in v.items()]):
-        answer = k
-
-print ('Part 1 Answer:', answer)
-
-#---------------------------------------------
-# Part 2
-#---------------------------------------------
-answer = None
+answer1 = None
+answer2 = None
 gtl = ['cats', 'trees']
 ltl = ['pomeranians', 'goldfish']
 ol = [k for k, v in MFCSAM.items() if k not in gtl and k not in ltl]
 
 for k, v in aoc_input.items():
+    if all([cv==MFCSAM[ck] for ck, cv in v.items()]):
+        answer1 = k
     if all([((ck in gtl and cv>MFCSAM[ck]) or (ck in ltl and cv<MFCSAM[ck]) or (ck in ol and cv==MFCSAM[ck])) for ck, cv in v.items()]):
-        answer = k
+        answer2 = k
 
-print ('Part 2 Answer:', answer)
+#---------------------------------------------
+# Part 1
+#---------------------------------------------
+print ('Part 1 Answer:', answer1)
+
+#---------------------------------------------
+# Part 2
+#---------------------------------------------
+print ('Part 2 Answer:', answer2)
