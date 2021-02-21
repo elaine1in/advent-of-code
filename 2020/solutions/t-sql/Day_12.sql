@@ -216,7 +216,7 @@ ORDER BY
 									WHEN i2.[Action]='W' THEN i2.[Value]*-1
 									ELSE 0
 								END
-		END
+		END AS Waypoint_X
 		,CASE
 			WHEN i2.[Action]='R' THEN CASE (i2.[Value]/90)%4
 										WHEN 0 THEN i.Waypoint_Y
@@ -235,7 +235,7 @@ ORDER BY
 									WHEN i2.[Action]='S' THEN i2.[Value]*-1
 									ELSE 0
 								END
-		END
+		END AS Waypoint_Y
 	FROM
 		Instructions AS i
 		JOIN #Instructions_Stg AS i2 ON i.ID+1=i2.ID
