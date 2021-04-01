@@ -9,30 +9,25 @@ import hashlib
 
 aoc_input = 'ckczppom'
 
+def solve(num):
+    hexdigest = ''
+    counter = 0
+    while hexdigest[:num] != '0'*num:
+        counter += 1
+        s = '{0}{1}'.format(aoc_input, counter)
+        hexdigest = hashlib.md5(s.encode('utf-8')).hexdigest()
+    return (counter)
+
 #---------------------------------------------
 # Part 1
 #---------------------------------------------
-hexdigest = ''
-counter = 0
-
-while hexdigest[:5] != '00000':
-    s = '{0}{1}'.format(aoc_input, counter)
-    hexdigest = hashlib.md5(s.encode('utf-8')).hexdigest()
-    counter += 1
+answer_1 = solve(5)
     
-counter -= 1 #to offset increment from while loop
-print ('Part 1 Answer:', counter)
+print ('Part 1 Answer:', answer_1)
 
 #---------------------------------------------
 # Part 2
 #---------------------------------------------
-hexdigest = ''
-counter = 0
+answer_2 = solve(6)
 
-while hexdigest[:6] != '000000':
-    s = '{0}{1}'.format(aoc_input, counter)
-    hexdigest = hashlib.md5(s.encode('utf-8')).hexdigest()
-    counter += 1
-    
-counter -= 1 #to offset increment from while loop
-print ('Part 2 Answer:', counter)
+print ('Part 2 Answer:', answer_2)
