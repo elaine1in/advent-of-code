@@ -57,7 +57,6 @@ for i, line in enumerate(aoc_input):
     digit = 5 if i==0 else int(answer_1[-1])
     k1, k2 = [(ip1, ip2) for ip1, p1 in enumerate(keypad) for ip2, p2 in enumerate(p1) if p2==digit][0]
 
-    start = keypad[k1][k2]
     for i2, command in enumerate(line):
         k1 += (1 if command=='D' else 0) + (-1 if command=='U' else 0)
         k2 += (1 if command=='R' else 0) + (-1 if command=='L' else 0)
@@ -85,7 +84,6 @@ for i, line in enumerate(aoc_input):
     button = '5' if i==0 else answer_2[-1]
     k1, k2 = [(ip1, ip2) for ip1, p1 in enumerate(keypad) for ip2, p2 in enumerate(p1) if p2==button][0]
 
-    start = keypad[k1][k2]
     for i2, command in enumerate(line):
         k1, k2 = check_index_part_2(k1, k2, command)
 
