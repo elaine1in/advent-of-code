@@ -295,7 +295,7 @@ WHERE 1=1
 	AND b2.Value_Num = @Value_2
 	
 ---------------------------------------------
--- Part 1
+-- Part 2
 ---------------------------------------------
 SELECT
 	ROUND(EXP(SUM(LOG(o.Value_Num))), 1) AS Answer
