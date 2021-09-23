@@ -19,16 +19,19 @@ file_path = (base_path / '../inputs/{0}.txt'.format(file_name)).resolve()
 
 aoc_input = [int(line) for line in open(file_path).read().split('\n')]
 
+def solve(r, number):
+    return sum([np.prod(i) for i in itertools.combinations(aoc_input, r) if sum(i)==number])
+
 #---------------------------------------------
 # Part 1
 #---------------------------------------------
-answer_1 = sum([np.prod(i) for i in itertools.combinations(aoc_input, 2) if (i[0]+i[1])==2020])
+answer_1 = solve(2, 2020)
 
 print ('Part 1 Answer:', answer_1)
         
 #---------------------------------------------
 # Part 2
 #---------------------------------------------
-answer_2 = sum([np.prod(i) for i in itertools.combinations(aoc_input, 3) if (i[0]+i[1]+i[2])==2020])
+answer_2 = solve(3, 2020)
 
 print ('Part 2 Answer:', answer_2)
