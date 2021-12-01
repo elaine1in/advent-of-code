@@ -2,6 +2,7 @@
 -- Author:			Elaine Lin
 -- Created Date:	2021-12-01
 -- References Used:
+--		https://learnsql.com/blog/moving-average-in-sql/
 ---------------------------------------------
 
 DROP TABLE IF EXISTS #Day_01
@@ -47,16 +48,12 @@ WHERE 1=1
 ;WITH prep AS
 	(
 	SELECT
-		d.ID AS grp
-		,SUM(d2.number) AS sum_sliding_window
+		d.ID
+		,SUM(d.number) OVER(ORDER BY d.ID ROWS BETWEEN CURRENT ROW AND 2 FOLLOWING) AS sum_sliding_window
+		,COUNT(*) OVER(ORDER BY d.ID ROWS BETWEEN CURRENT ROW AND 2 FOLLOWING) AS ct
 	FROM
 		#Day_01 AS d
-		JOIN #Day_01 AS d2 ON d2.ID BETWEEN d.ID AND d.ID+2
 	WHERE 1=1
-	GROUP BY
-		d.ID
-	HAVING
-		COUNT(*)=3
 	)
 
 SELECT
@@ -65,13 +62,14 @@ FROM
 	(
 	SELECT
 		p.sum_sliding_window
-		,LEAD(p.sum_sliding_window) OVER (ORDER BY p.grp) AS lead_sum_sliding_window
+		,LEAD(p.sum_sliding_window) OVER (ORDER BY p.ID) AS lead_sum_sliding_window
 		,CASE
-			WHEN LEAD(p.sum_sliding_window) OVER(ORDER BY p.grp)>p.sum_sliding_window THEN 1
+			WHEN LEAD(p.sum_sliding_window) OVER(ORDER BY p.ID)>p.sum_sliding_window THEN 1
 			ELSE 0
 		END AS answer
 	FROM
 		prep AS p
 	WHERE 1=1
+		AND p.ct=3
 	) AS a
 WHERE 1=1
