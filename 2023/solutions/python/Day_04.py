@@ -35,8 +35,8 @@ def solve(part: int) -> int:
         # print (f"{winning_numbers = } | {card_numbers = } | {number_of_matches = }")
 
         for i in range(1, number_of_matches+1):
-            number_of_cards[card_num+i] += 1
-            number_of_cards[card_num+i] += number_of_cards[card_num]-1
+            number_of_cards[card_num+i] += 1 # add in original card
+            number_of_cards[card_num+i] += number_of_cards[card_num]-1 # add in copy cards
             # print (f"{number_of_cards = }")
         
     return answer if part == 1 else sum(number_of_cards.values())
