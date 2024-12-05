@@ -1,47 +1,6 @@
-#---------------------------------------------
-# Author:       Elaine Lin
-# Created Date: 2021-01-06
-# References Used:
-#---------------------------------------------
+from aocd.models import Puzzle
 
-from pathlib import Path
+puzzle = Puzzle(year=2015, day=2)
 
-base_path = Path(__file__).parent.parent
-file_path = (base_path / '../inputs/Day_02.txt').resolve()
-
-aoc_input = []
-
-with open(file_path) as file:
-    for line in file:
-        aoc_input.append(line)
-
-#---------------------------------------------
-# Part 1
-#---------------------------------------------
-answer = 0
-for i in aoc_input:
-    l, w, h = i.split('x')
-    l = int(l)
-    w = int(w)
-    h = int(h)
-    lw = (l*w)
-    wh = (w*h)
-    hl = (h*l)
-    slack = min(lw, wh, hl)
-    answer += (2*(lw+wh+hl))+slack
-
-print ('Part 1 Answer:', answer)
-
-#---------------------------------------------
-# Part 2
-#---------------------------------------------
-answer = 0
-for i in aoc_input:
-    l, w, h = i.split('x')
-    l = int(l)
-    w = int(w)
-    h = int(h)
-    sides = sorted([l, w, h])
-    answer += (2*(sides[0]+sides[1])) + (l*w*h)
-
-print ('Part 2 Answer:', answer)
+puzzle.answer_a = sum([(2*l*w)+(2*w*h)+(2*h*l)+(min((l*w),(w*h),(h*l))) for _ in puzzle.input_data.splitlines() for l,w,h in [[int(v) for v in _.split("x")]]])
+puzzle.answer_b = sum([(l*w*h)+(2*min((l+w),(w+h),(h+l))) for _ in puzzle.input_data.splitlines() for l,w,h in [[int(v) for v in _.split("x")]]])

@@ -1,33 +1,15 @@
-#---------------------------------------------
-# Author:       Elaine Lin
-# Created Date: 2021-01-08
-# References Used:
-#   https://stackoverflow.com/questions/5297448/how-to-get-md5-sum-of-a-string-using-python
-#---------------------------------------------
-
+from aocd.models import Puzzle
 import hashlib
 
-aoc_input = 'ckczppom'
+puzzle = Puzzle(year=2015, day=4)
 
+string = puzzle.input_data
 def solve(num):
-    hexdigest = ''
     counter = 0
-    while hexdigest[:num] != '0'*num:
+    while True:
         counter += 1
-        s = '{0}{1}'.format(aoc_input, counter)
-        hexdigest = hashlib.md5(s.encode('utf-8')).hexdigest()
-    return (counter)
+        if hashlib.md5(f"{string}{counter}".encode("utf-8")).hexdigest()[:num] == "0"*num:
+            return (counter)
 
-#---------------------------------------------
-# Part 1
-#---------------------------------------------
-answer_1 = solve(5)
-    
-print ('Part 1 Answer:', answer_1)
-
-#---------------------------------------------
-# Part 2
-#---------------------------------------------
-answer_2 = solve(6)
-
-print ('Part 2 Answer:', answer_2)
+puzzle.answer_a = solve(5)
+puzzle.answer_b = solve(6)
